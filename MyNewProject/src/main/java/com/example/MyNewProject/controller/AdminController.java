@@ -5,9 +5,7 @@ import com.example.MyNewProject.dto.ConstituencyDto;
 import com.example.MyNewProject.dto.ElectionDto;
 import com.example.MyNewProject.dto.ElectionResultRequestDTO;
 import com.example.MyNewProject.service.AdminService;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/admin")
@@ -16,23 +14,27 @@ public class AdminController {
     public AdminController(AdminService adminService){
         this.adminService=adminService;
     }
+    @GetMapping("/test")
+    public  String test(){
+        return  "verified succefully";
+    }
     @PostMapping("/electionresults")
-    public String createElectionResult(ElectionResultRequestDTO dto){
+    public String createElectionResult(@RequestBody ElectionResultRequestDTO dto){
         adminService.createElectionResult(dto);
         return "Election Result Created Succefully";
     }
     @PostMapping("/Candidate")
-    public String createCandidate(CandidateDto dto){
+    public String createCandidate(@RequestBody CandidateDto dto){
         adminService.createCandidate(dto);
         return"candidate created succefuuly";
     }
     @PostMapping("/constituency")
-    public String createConstituency(ConstituencyDto dto){
+    public String createConstituency(@RequestBody ConstituencyDto dto){
         adminService.createConstituency(dto);
         return"candidate created succefuuly";
     }
-    @PostMapping("/constituency")
-    public String createElection(ElectionDto dto){
+    @PostMapping("/election")
+    public String createElection(@RequestBody ElectionDto dto){
         adminService.createElection(dto);
         return"candidate created succefuuly";
     }

@@ -24,7 +24,7 @@ public class CandidateController {
     public List<Candidate> searchCandidate(@RequestParam String name){
         return  null;
     }
-    @GetMapping("/party}")
+    @GetMapping("/party")
     public List<Candidate>  getCandidatebyParty(@RequestParam String partyname){
         return  null;
     }
@@ -36,7 +36,7 @@ public class CandidateController {
     public List<Asset_Declaration>  getAssets(@PathVariable int id){
         return  null;
     }
-    @GetMapping("/id/download")
+    @GetMapping("/{id}/download")
     public String downloadCandidateProfile(@PathVariable int id){
         return  null;
     }

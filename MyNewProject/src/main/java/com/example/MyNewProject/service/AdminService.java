@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -59,9 +60,10 @@ public class AdminService {
                     assetDeclaration.setDeclared_assets(a.getDeclared_assets());
                     assetDeclaration.setDeclared_liabilities(a.getDeclared_liabilities());
                     assetDeclaration.setElectionResult(electionResult);
-                    return  assetDeclaration;
+                    assetDeclarationRepo.save(assetDeclaration);
 
-                }).toList();
+                    return  assetDeclaration;
+                }).collect(Collectors.toList());
         electionResult.setAssetDeclarations(assetDeclarations);
 
         List<Criminal_Case> criminalCases = dto
@@ -72,12 +74,15 @@ public class AdminService {
                     criminalCase.setCase_description(a.getCase_description());
                     criminalCase.setSeverityLevel(a.getSeverityLevel());
                     criminalCase.setElectionResult(electionResult);
+                    criminalCaseRepo.save(criminalCase);
+
                     return criminalCase;
-                }).toList();
+                }).collect(Collectors.toList());
+
         electionResult.setCriminalCases(criminalCases);
         electionResultRepo.save(electionResult);
     }
-
+    @Transactional
     public void createCandidate(CandidateDto dto) {
         Candidate candidate = new Candidate();
         candidate.setBiofraphy(dto.getBiography());
@@ -88,7 +93,7 @@ public class AdminService {
         candidateRepo.save(candidate);
 
     }
-
+    @Transactional
     public void createConstituency(ConstituencyDto dto) {
         Constituency constituency = new Constituency();
         constituency.setName(dto.getName());
@@ -101,5 +106,6 @@ public class AdminService {
         Election election = new Election();
         election.setElectionType(dto.getElectionType());
         election.setYear(dto.getYear());
+        electionRepo.save(election);
     }
 }

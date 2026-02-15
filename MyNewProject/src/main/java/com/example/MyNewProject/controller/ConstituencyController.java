@@ -11,7 +11,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/constituencies")
 public class ConstituencyController {
-    @GetMapping("/{id")
+    @GetMapping("/{id}")
     public Constituency getConstituency(@PathVariable int id){
         return null;
     }
