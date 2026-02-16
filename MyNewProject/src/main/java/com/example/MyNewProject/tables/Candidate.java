@@ -1,11 +1,11 @@
 package com.example.MyNewProject.tables;
 
-import com.example.MyNewProject.enums.Result_Status;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
@@ -19,9 +19,11 @@ public class Candidate {
     private Date dob;
     private String gender;
     private String biofraphy;
+    private BigDecimal currentdeclared_assets;
+    private BigDecimal currentdeclared_liabilities;
+    private int totoalnumberofcase;
     @CreationTimestamp
     private Date createdAt;
-
     private String party;
     @OneToMany(mappedBy = "candidate")
     @JsonIgnore

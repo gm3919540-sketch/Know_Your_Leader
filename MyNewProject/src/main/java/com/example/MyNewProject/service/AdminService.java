@@ -4,8 +4,10 @@ import com.example.MyNewProject.dto.CandidateDto;
 import com.example.MyNewProject.dto.ConstituencyDto;
 import com.example.MyNewProject.dto.ElectionDto;
 import com.example.MyNewProject.dto.ElectionResultRequestDTO;
+import com.example.MyNewProject.event.ElectionResultCreatedEvent;
 import com.example.MyNewProject.repository.*;
 import com.example.MyNewProject.tables.*;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,13 +24,15 @@ public class AdminService {
     private final ElectionRepo electionRepo;
     private final ConstituencyRepo constituencyRepo;
     private final Election_ResultRepo electionResultRepo;
+    private final ApplicationEventPublisher applicationEventPublisher;
     public AdminService(
             CandidateRepo candidateRepo,
             Asset_DeclarationRepo assetDeclarationRepo,
             Criminal_CaseRepo criminalCaseRepo,
             ElectionRepo electionRepo,
             ConstituencyRepo constituencyRepo,
-            Election_ResultRepo electionResultRepo
+            Election_ResultRepo electionResultRepo,
+            ApplicationEventPublisher applicationEventPublisher
     ){
         this.assetDeclarationRepo=assetDeclarationRepo;
         this.candidateRepo=candidateRepo;
@@ -36,6 +40,7 @@ public class AdminService {
         this.criminalCaseRepo=criminalCaseRepo;
         this.electionRepo =electionRepo;
         this.electionResultRepo=electionResultRepo;
+        this.applicationEventPublisher= applicationEventPublisher;
     }
 
     @Transactional
@@ -45,6 +50,7 @@ public class AdminService {
         Constituency constituency = constituencyRepo.findById(dto.getConstituencyId()).orElseThrow(()->new IllegalArgumentException("constinuecny not found"));
         Election election = electionRepo.findById(dto.getElectionId()).orElseThrow(()->new IllegalArgumentException("election not found"));
         Election_Result electionResult = new Election_Result();
+
         electionResult.setCandidate(candidate);
         electionResult.setElection(election);
         electionResult.setConstituency(constituency);
@@ -81,6 +87,8 @@ public class AdminService {
 
         electionResult.setCriminalCases(criminalCases);
         electionResultRepo.save(electionResult);
+        applicationEventPublisher.publishEvent(new ElectionResultCreatedEvent(candidate.getId()));
+
     }
     @Transactional
     public void createCandidate(CandidateDto dto) {
