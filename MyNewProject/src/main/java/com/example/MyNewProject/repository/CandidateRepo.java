@@ -16,5 +16,5 @@ public interface CandidateRepo extends JpaRepository<Candidate,Integer> {
 
     List<Candidate> findByNameAndParty(String name, String party);
 
-    int countByElectionResult(int id);
+
 }

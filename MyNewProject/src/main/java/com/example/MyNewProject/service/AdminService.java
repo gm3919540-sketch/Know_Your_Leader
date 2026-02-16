@@ -98,6 +98,7 @@ public class AdminService {
         candidate.setGender(dto.getGender());
         candidate.setName(dto.getName());
         candidate.setParty(dto.getParty());
+        candidate.setImageUrl(dto.getUrl());
         candidateRepo.save(candidate);
 
     }

@@ -6,12 +6,14 @@ import com.example.MyNewProject.repository.Election_ResultRepo;
 import com.example.MyNewProject.tables.*;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Image;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.PdfWriter;
 import org.springframework.stereotype.Service;
 
 
 import java.io.ByteArrayOutputStream;
+import java.net.URL;
 import java.util.List;
 
 @Service
@@ -71,6 +73,19 @@ public class CandidateService {
 
             document.add(new Paragraph("Candidate Profile"));
             document.add((new Paragraph(" ")));
+            // Add candidate image
+            if(candidate.getImageUrl() != null && !candidate.getImageUrl().isEmpty()) {
+                try {
+                    Image img = Image.getInstance(new URL(candidate.getImageUrl()));
+                    img.scaleToFit(120, 120);   // adjust size
+                    img.setAlignment(Image.ALIGN_CENTER);
+                    document.add(img);
+                    document.add(new Paragraph(" "));
+                } catch (Exception e) {
+                    System.out.println("Image not loaded: " + e.getMessage());
+                }
+            }
+
             document.add(new Paragraph("Name: "+candidate.getName()));
             document.add(new Paragraph("DOB: "+candidate.getDob()));
             document.add(new Paragraph("Party: "+candidate.getParty()));

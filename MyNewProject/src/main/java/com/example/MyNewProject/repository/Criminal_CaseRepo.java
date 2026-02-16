@@ -5,4 +5,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface Criminal_CaseRepo extends JpaRepository<Criminal_Case,Integer> {
 
+    int countByElectionResult_Id(int id);
 }

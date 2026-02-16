@@ -25,6 +25,7 @@ public class Candidate {
     @CreationTimestamp
     private Date createdAt;
     private String party;
+    private String ImageUrl;
     @OneToMany(mappedBy = "candidate")
     @JsonIgnore
     private List<Election_Result> electionResult;

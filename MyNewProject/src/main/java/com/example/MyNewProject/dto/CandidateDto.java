@@ -11,4 +11,5 @@ public class CandidateDto {
     private String gender;
     private String biography;
     private String party;
+    private String url;
 }
