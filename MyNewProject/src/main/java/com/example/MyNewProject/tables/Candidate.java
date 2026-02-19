@@ -18,6 +18,8 @@ public class Candidate {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private  int id;
+    @Column(unique = true)
+    private String email;
     private String name;
     private Date dob;
     private String gender;
@@ -29,6 +31,9 @@ public class Candidate {
     private Date createdAt;
     private String party;
     private String ImageUrl;
+    @OneToOne(mappedBy = "candidate")
+    @JsonIgnore
+    private Notes notes;
     @OneToMany(mappedBy = "candidate")
     @JsonIgnore
     private List<Election_Result> electionResult;

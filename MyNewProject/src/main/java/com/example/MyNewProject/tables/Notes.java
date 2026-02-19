@@ -1,9 +1,6 @@
 package com.example.MyNewProject.tables;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
@@ -21,4 +18,7 @@ public class Notes {
     private String note_text;
     @CreationTimestamp
     private Date Created_at;
+    @OneToOne
+    @JoinColumn
+    private Candidate candidate;
 }

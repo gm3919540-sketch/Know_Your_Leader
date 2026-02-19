@@ -3,7 +3,7 @@ package com.example.MyNewProject.tables;
 import com.example.MyNewProject.enums.Result_Status;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.Data;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -13,7 +13,6 @@ import java.util.List;
 @Setter
 @Getter
 public class Election_Result {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;

@@ -11,6 +11,7 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
+@Table(uniqueConstraints = @UniqueConstraint(columnNames = {"year","electionType"}))
 public class Election {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

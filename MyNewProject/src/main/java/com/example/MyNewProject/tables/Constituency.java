@@ -10,6 +10,7 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
+@Table(uniqueConstraints = @UniqueConstraint(columnNames = {"name","district","state"}))
 public class Constituency {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
