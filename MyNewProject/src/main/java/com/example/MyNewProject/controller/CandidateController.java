@@ -1,8 +1,12 @@
 package com.example.MyNewProject.controller;
 
+import com.example.MyNewProject.responseDto.CandidateElectionHistory;
 import com.example.MyNewProject.service.CandidateService;
 import com.example.MyNewProject.tables.Asset_Declaration;
 import com.example.MyNewProject.tables.Candidate;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -63,18 +67,29 @@ public class CandidateController {
         return ResponseEntity.ok(summury);
     }
     @GetMapping("allCandidatedata")
-    public List<Candidate> getAllCandidate(){
-        return candidateService.getAllCandidate();
+    public Page<Candidate> getAllCandidate(
+            @RequestParam (defaultValue = "0") int page,
+            @RequestParam (defaultValue = "9") int size
+    ){
+        Pageable pageable = PageRequest.of(page,size);
+        return candidateService.getAllCandidate(pageable);
     }
     @GetMapping("/search/BYANUFIELD")
-    public List<Candidate> searchCandidate(
+    public Page<Candidate> searchCandidate(
             @RequestParam(required = false) String name,
             @RequestParam(required = false) String party,
             @RequestParam(required = false) String state,
-            @RequestParam(required = false) String constituency
+            @RequestParam(required = false) String constituency,
+            @RequestParam (defaultValue = "0") int page,
+            @RequestParam (defaultValue = "9") int size
             ){
-          return  candidateService.search(name,party,state,constituency);
+        Pageable pageable = PageRequest.of(page,size);
+          return  candidateService.search(name,party,state,constituency,pageable);
           }
+   @GetMapping("/electionresult")
+   public List<CandidateElectionHistory> getElectionResultByCandidate(int id){
+        return candidateService.getElectionResultByCandidate(id);
+   }
 
 
 

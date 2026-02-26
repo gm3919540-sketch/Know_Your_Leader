@@ -3,18 +3,24 @@ package com.example.MyNewProject.service;
 import com.example.MyNewProject.repository.Asset_DeclarationRepo;
 import com.example.MyNewProject.repository.CandidateRepo;
 import com.example.MyNewProject.repository.Election_ResultRepo;
+import com.example.MyNewProject.responseDto.CandidateElectionHistory;
 import com.example.MyNewProject.tables.*;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Image;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.PdfWriter;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 
 import java.io.ByteArrayOutputStream;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CandidateService {
@@ -59,8 +65,8 @@ public class CandidateService {
     }
 
     public List<Asset_Declaration> getAssets(int idCandidate) {
-        Election_Result electionResult = electionResultRepo.findByCandidateId(idCandidate);
-        List<Asset_Declaration> assetDeclarations = electionResult.getAssetDeclarations();
+        Optional<Election_Result> electionResult = electionResultRepo.findByCandidateId(idCandidate);
+        List<Asset_Declaration> assetDeclarations = electionResult.get().getAssetDeclarations();
         return  assetDeclarations;
     }
 
@@ -197,13 +203,35 @@ public class CandidateService {
 
     }
 
-    public List<Candidate> getAllCandidate() {
-        return  candidateRepo.findAll();
+    public Page<Candidate> getAllCandidate(Pageable pageable) {
+        return  candidateRepo.findAll(pageable);
     }
 
-    public List<Candidate> search(String name, String party, String state, String constituency) {
+    public Page<Candidate> search(String name, String party, String state, String constituency,Pageable pageable) {
         System.out.println(name +" "+party+" "+state+" "+ constituency);
-        return candidateRepo.search(name,party,state,constituency);
+        return candidateRepo.search(name,party,state,constituency,pageable);
+
+    }
+
+    public List<CandidateElectionHistory> getElectionResultByCandidate(int id) {
+
+        List<Election_Result> electionResults = Collections.singletonList(electionResultRepo.findByCandidateId(id)
+                .orElseThrow(() -> new IllegalArgumentException("Election result correpond to this candidate does not exist")));
+       List<CandidateElectionHistory> finalcandidateElectionHistories = new ArrayList<>();
+        for (Election_Result electionResult: electionResults){
+            CandidateElectionHistory candidateElectionHistory = new CandidateElectionHistory();
+            candidateElectionHistory.setResultStatus(electionResult.getResultStatus());
+            candidateElectionHistory.setVotesrecived(electionResult.getVotes_received());
+            Constituency constituency = electionResult.getConstituency();
+            candidateElectionHistory.setDistrict(constituency.getDistrict());
+            candidateElectionHistory.setState(constituency.getState());
+            candidateElectionHistory.setConstituencyname(constituency.getName());
+             Election election = electionResult.getElection();
+             candidateElectionHistory.setElectionType(election.getElectionType());
+             candidateElectionHistory.setYear(election.getYear());
+             finalcandidateElectionHistories.add(candidateElectionHistory);
+        }
+        return finalcandidateElectionHistories;
 
     }
 }
