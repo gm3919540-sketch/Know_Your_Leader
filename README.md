@@ -29,3 +29,13 @@ Retrieve leader information by ID
 Generate AI summaries for public records
 
 Manage database CRUD operations
+
+Performance Optimization->
+
+To improve system performance:
+
+Redis caching implemented to reduce repeated database queries
+
+Expiration strategy used for cached responses
+
+Hibernate used for efficient database interactions
