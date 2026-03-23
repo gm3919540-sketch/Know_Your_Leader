@@ -13,9 +13,7 @@ public class ElectionResultRequestDTO {
     private  int electionYear;
 
     private int votes_received;
-    private String State;
-    private String District;
-    private String Constname;
+    private int constituency_Id;
     private Result_Status resultStatus;
     private List<AssetDTO> assets;
     private List<CriminalCaseDTO> criminalCases;
