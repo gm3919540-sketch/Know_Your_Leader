@@ -12,6 +12,11 @@ import java.util.List;
 @Entity
 @Setter
 @Getter
+@Table(
+        uniqueConstraints = @UniqueConstraint(
+                columnNames = {"candidate_id", "constituency_id", "election_id"}
+        )
+)
 public class Election_Result {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,13 +25,13 @@ public class Election_Result {
     @Enumerated(EnumType.STRING)
     private Result_Status resultStatus;
     @ManyToOne
-    @JoinColumn
+    @JoinColumn(name = "candidate_id")
     private  Candidate candidate;
     @ManyToOne
-    @JoinColumn
+    @JoinColumn(name = "election_id")
     private Election election;
     @ManyToOne
-    @JoinColumn
+    @JoinColumn(name = "constituency_id")
     private Constituency constituency;
     @OneToMany(mappedBy = "electionResult",cascade = CascadeType.ALL)
     @JsonIgnore
