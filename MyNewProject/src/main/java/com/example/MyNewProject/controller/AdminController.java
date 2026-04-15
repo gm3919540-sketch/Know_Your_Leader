@@ -20,6 +20,10 @@ public class AdminController {
     }
     @PostMapping("/electionresults")
     public String createElectionResult(@RequestBody ElectionResultRequestDTO dto){
+        System.out.println(dto.getElectionType());
+        System.out.println(dto.getResultStatus());
+        System.out.println(dto.getCriminalCases());
+        System.out.println(dto.getVotes_received());
         adminService.createElectionResult(dto);
         return "Election Result Created Succefully";
     }

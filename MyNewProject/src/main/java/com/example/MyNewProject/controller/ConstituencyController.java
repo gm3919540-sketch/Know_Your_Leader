@@ -39,6 +39,7 @@ public class ConstituencyController {
     }
     @GetMapping("/getIdByConstitency/{constituency}")
     public int getid(@PathVariable String constituency){
+        System.out.println(constituency);
         return  constituencyService.getID(constituency);
     }
 }

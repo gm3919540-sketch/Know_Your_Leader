@@ -52,6 +52,7 @@ public class AdminService {
             "candidateCompare"
     }, key = "#dto.candidateId")
     public void createElectionResult(ElectionResultRequestDTO dto) {
+        System.out.println(dto.getCandidateId());
 
         Candidate candidate = candidateRepo.findById(dto.getCandidateId()).orElseThrow(()->new IllegalArgumentException("candidate not found"));
         Constituency constituency = constituencyRepo.findById(dto.getConstituency_Id()).orElseThrow(()->new IllegalArgumentException("constinuecny not found"));

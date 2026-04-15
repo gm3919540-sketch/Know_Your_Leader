@@ -24,7 +24,7 @@ public interface ConstituencyRepo extends JpaRepository<Constituency,Integer> {
     @Query(value = "SELECT DISTINCT name FROM CONSTITUENCY WHERE DISTRICT =?",nativeQuery = true)
     List<String> getConstinyByDistrictName(String districtName);
 
-    @Query(value = "SELECT ID FROM CONTITUENCY WHERE NAME =?",nativeQuery = true)
+    @Query(value = "SELECT ID FROM constituency WHERE NAME =?",nativeQuery = true)
     int getId(String constituency);
 
 }
