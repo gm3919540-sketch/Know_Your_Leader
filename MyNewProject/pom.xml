@@ -106,6 +106,11 @@
 			<artifactId>kotlin-reflect</artifactId>
 			<version>1.9.22</version>
 		</dependency>
+		<dependency>
+			<groupId>com.mysql</groupId>
+			<artifactId>mysql-connector-j</artifactId>
+			<scope>runtime</scope>
+		</dependency>
 
 	</dependencies>
 	<dependencyManagement>
