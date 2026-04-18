@@ -82,6 +82,7 @@ public class CandidateService {
         return assetDeclarations;
     }
 
+    @Transactional
     public byte[] downloadCandidateProfile(int id) {
         Candidate candidate= candidateRepo.findById(id)
                 .orElseThrow(()-> new IllegalArgumentException("Candidate does not exist"));
